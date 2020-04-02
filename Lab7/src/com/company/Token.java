@@ -7,7 +7,7 @@ public class Token {
     private Integer value;
 
     public Token(Integer value) {
-        this.value = new Random().nextInt(value);
+        this.value = new Random().nextInt(value) + 1;
     }
 
     public Integer getValue() {
@@ -25,7 +25,6 @@ public class Token {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Token token = (Token) o;
         return Objects.equals(value, token.value);

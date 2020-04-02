@@ -7,12 +7,15 @@ import com.company.players.SmartPlayer;
 
 public class Game {
     public void main() {
-        Board board = new Board(1000, 1200);
-        Player ion = new SmartPlayer("Ion",board);
-        Player vasile = new SmartPlayer("Vasile",board);
+        Board board = new Board(12*100, 12*110,6);
+        new Thread(new Daemon(10)).start();
+        new Thread(new SmartPlayer("SmartGigi",board)).start();
+        new Thread(new SmartPlayer("SmartIon",board)).start();
+        new Thread(new SmartPlayer("SmartGheorghe",board)).start();
 
-        new Thread(ion).start();
-        new Thread(vasile).start();
+        new Thread(new RandomPlayer("RandomCostache",board)).start();
+        new Thread(new RandomPlayer("RandomVasile",board)).start();
+        new Thread(new RandomPlayer("RandomMaria",board)).start();
     }
 
 }
