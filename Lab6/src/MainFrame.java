@@ -33,6 +33,7 @@ public class MainFrame {
         rootPanel.add(configurationPanel,BorderLayout.NORTH);
         rootPanel.add(drawingPanel,BorderLayout.CENTER);
         rootPanel.add(controlPanel,BorderLayout.SOUTH);
+
     }
 
     public DrawingPanel getDrawingPanel() {

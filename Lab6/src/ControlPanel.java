@@ -1,9 +1,12 @@
+import javafx.stage.FileChooser;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.awt.image.ImageFilter;
 import java.io.File;
 import java.io.IOException;
 
@@ -33,9 +36,13 @@ public class ControlPanel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    // retrieve image
+                    JFileChooser fileChooser = new JFileChooser();
+                    fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+                    fileChooser.showOpenDialog(bSave);
+                    File dir = fileChooser.getSelectedFile();
+
                     BufferedImage bi = drawingPanel.image;
-                    File outputfile = new File("saved.png");
+                    File outputfile = new File(dir.getAbsolutePath() + "/saved.png");
                     ImageIO.write(bi, "png", outputfile);
                 } catch (IOException ignored) {
                 }
@@ -47,8 +54,13 @@ public class ControlPanel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    drawingPanel.image = ImageIO.read(new File("\\saved.png"));
-                    drawingPanel.load();
+                    final JFileChooser fileChooser = new JFileChooser();
+                    if (fileChooser.showOpenDialog(bLoad) == JFileChooser.APPROVE_OPTION) {
+                        File loadingImage = fileChooser.getSelectedFile();
+                        drawingPanel.image = ImageIO.read(loadingImage);
+                        drawingPanel.originalImage = ImageIO.read(loadingImage);
+                        drawingPanel.load();
+                    }
                 } catch (IOException ignored) {
                 }
             }
@@ -78,4 +90,8 @@ public class ControlPanel extends JPanel {
         add(rootPanel, BorderLayout.CENTER);
     }
 
+    @Override
+    public void update(Graphics g) {
+        super.update(g);
+    }
 }

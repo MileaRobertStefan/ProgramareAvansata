@@ -2,6 +2,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 public class ConfigurationPanel extends JPanel {
     private ColorChooser colorChooser;
@@ -30,14 +32,35 @@ public class ConfigurationPanel extends JPanel {
         numberOfSidesLabel.setSize(250, 100);
 
         colors = new JComboBox<String>();
-        colors.addItem("Rosu");
-        colors.addItem("Portocaliu");
-        colors.addItem("Galben");
-        colors.addItem("Verde");
-        colors.addItem("Albastru");
-        colors.addItem("Violet");
-        radiusValue = 10;
+        colors.addItem("Cerc");
+        colors.addItem("Triunghi");
+        colors.addItem("Patrat");
+        colors.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent evt) {
+                JComboBox cb = (JComboBox) evt.getSource();
 
+                Object item = evt.getItem();
+
+                if (evt.getStateChange() == ItemEvent.SELECTED) {
+                    switch ((String) item) {
+                        case "Cerc":
+                            numberOfSides.setValue(100);
+                            break;
+                        case "Triunghi":
+                            numberOfSides.setValue(3);
+                            break;
+                        case "Patrat":
+                            numberOfSides.setValue(4);
+                            break;
+
+                    }
+                }
+            }
+        });
+
+
+        radiusValue = 10;
         color = Color.BLACK;
         radius = new JTextField("10");
 
